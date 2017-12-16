@@ -1,7 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "BackgroundLayer.h"
-//#include
+#include "FishLayer.h"
 //#include
 //#include
 //#include
@@ -15,6 +15,8 @@ public:
 	virtual ~GameScene();
 	CREATE_FUNC(GameScene)
 	virtual bool init();
+	void preloadResources();
 protected:
 	BackgroundLayer* _bgLayer;
+	FishLayer* _fishLayer;
 };

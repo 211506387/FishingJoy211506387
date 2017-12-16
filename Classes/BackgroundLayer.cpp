@@ -16,4 +16,5 @@ bool BackgroundLayer::init(){
 		bgSprite->setPosition(CCPointMake(winSize.width * 0.5,winSize.height * 0.5));
 		return true;
 	}while(0);
+	return false;
 }
