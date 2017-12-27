@@ -2,7 +2,7 @@
 #include "cocos2d.h"
 #include "BackgroundLayer.h"
 #include "FishLayer.h"
-//#include
+#include "CannonLayer.h"
 //#include
 //#include
 
@@ -19,4 +19,5 @@ public:
 protected:
 	BackgroundLayer* _bgLayer;
 	FishLayer* _fishLayer;
+	CannonLayer* _cannonLayer;
 };

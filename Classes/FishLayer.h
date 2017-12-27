@@ -11,7 +11,7 @@ class FishLayer:
 public:
 	FishLayer();
 	virtual ~FishLayer();
-	virtual bool init();
+	bool init();
 	CREATE_FUNC(FishLayer)
 	void addFish(float dt);
 protected:
