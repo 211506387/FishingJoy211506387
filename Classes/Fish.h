@@ -35,6 +35,7 @@ public:
 	static Fish* create(FishType type = k_Fish_Type_SmallFish);
 	int getScore();
 	int getSpeed();
+	CCRect getCollisionArea();
 protected:
 	CCSprite* _fishSprite;
 	FishType _type;

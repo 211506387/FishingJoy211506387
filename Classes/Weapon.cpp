@@ -6,6 +6,7 @@ Weapon::~Weapon(void)
 {
 	CC_SAFE_RELEASE(_bullets);
 	CC_SAFE_RELEASE(_fishNets);
+	CC_SAFE_RELEASE(_particles);
 }
 
 Weapon* Weapon::create(CannonType type/* = k_Cannon_Type_1*/){
@@ -34,8 +35,11 @@ bool Weapon::init(CannonType type/* = k_Cannon_Type_1*/){
 		CC_BREAK_IF(!_fishNets);
 		CC_SAFE_RETAIN(_fishNets);
 
-		for(int i = 0; i < BULLET_COUNTS; i++)
-		{
+		_particles = CCArray::createWithCapacity(BULLET_COUNTS);
+		CC_BREAK_IF(!_particles);
+		CC_SAFE_RETAIN(_particles);
+
+		for(int i = 0; i < BULLET_COUNTS; i++){
 			Bullet* bullet = Bullet::create();
 			_bullets->addObject(bullet);
 			addChild(bullet);
@@ -46,14 +50,19 @@ bool Weapon::init(CannonType type/* = k_Cannon_Type_1*/){
 			addChild(fishNet);
 			fishNet->setVisible(false);
 			bullet->setUserObject(fishNet);
+
+			CCParticleSystemQuad* particle = CCParticleSystemQuad::create("yuwanglizi.plist");
+			particle->stopSystem();
+			addChild(particle);
+			_particles->addObject(particle);
+			fishNet->setUserObject(particle);
 		}
 		return true;
 	}while(0);
 	return false;
 }
 
-void Weapon::changeCannon(CannonOperate operate)
-{
+void Weapon::changeCannon(CannonOperate operate){
 	int type = (int) _cannon->getType();
 	type += operate;
 	_cannon->setType((CannonType)type);
@@ -68,5 +77,33 @@ void Weapon::aimAt(CCPoint target){
 }
 
 void Weapon:: shootTo (CCPoint target){
-	/*_bullet->flyTo(target);*/
+	Bullet* bullet= getBulletToShoot();
+	if(!bullet) return;
+	CCPoint pointWorldSpace = getParent()->convertToWorldSpace(getPosition());
+	float distance = ccpDistance(target, pointWorldSpace);
+	if(distance > _cannon->getFireRange()){
+		CCPoint normal = ccpNormalize(ccpSub(target, pointWorldSpace));
+		CCPoint mult = ccpMult(normal, _cannon->getFireRange());
+		target = ccpAdd(pointWorldSpace, mult);
+	}
+	bullet->flyTo(target, _cannon->getType());
+}
+
+Bullet* Weapon::getBulletToShoot(){
+	CCObject* obj;
+	CCARRAY_FOREACH(_bullets, obj){
+		Bullet* bullet = (Bullet*)obj;
+		if(!bullet->isVisible()){
+			return bullet;
+		}
+	}
+	return NULL;
+}
+
+CCRect Weapon::getCollisionArea(Bullet* bullet){
+	FishNet* _fishNets = (FishNet*)bullet->getUserObject();
+	if(_fishNets->isVisible()){
+		return _fishNets->getCollisionArea();
+	}
+	return CCRectZero;
 }

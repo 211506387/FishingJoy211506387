@@ -1,4 +1,9 @@
 #include "Bullet.h"
+#include "FishNet.h"
+
+enum{
+	k_Bullet_Action = 0
+};
 
 Bullet::Bullet(){
 }
@@ -48,3 +53,32 @@ float Bullet::getSpeed(int type){
 	return speed;
 }
 
+void Bullet::end(){
+	stopActionByTag(k_Bullet_Action);
+	this->setVisible(false);
+	FishNet* fishNet = (FishNet*)getUserObject();
+	fishNet->showAt(getPosition(), getTag());
+}
+
+void Bullet::flyTo(CCPoint targetInWorldSpace, int type/*=0*/){
+	CCPoint startInNodeSpace = CCPointZero;
+	CCPoint	startInWorldSpace = this->getParent()->convertToWorldSpace(startInNodeSpace);
+	CCPoint targetInNodeSpace = this->getParent()->convertToNodeSpace(targetInWorldSpace);
+	this->setPosition(startInNodeSpace);
+	this->setVisible(true);
+	float angle = ccpAngleSigned(ccpSub(targetInWorldSpace, startInWorldSpace), CCPointMake(0, 1));
+	this->setRotation(CC_RADIANS_TO_DEGREES(angle));
+	this->setTag(type);
+	CCString* bulletFrameName = CCString::createWithFormat("weapon_bullet_%03d.png", type + 1);
+	_bulletSprite->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(bulletFrameName->getCString()));
+	float flightTime = ccpDistance(targetInWorldSpace, startInWorldSpace) / getSpeed(type);
+	CCMoveTo* moveTo = CCMoveTo::create(flightTime, targetInNodeSpace);
+	CCCallFunc* callFunc = CCCallFunc::create(this, callfunc_selector(Bullet::end));
+	CCSequence* sequence = CCSequence::create(moveTo, callFunc, NULL);
+	sequence->setTag(k_Bullet_Action);
+	runAction(sequence);
+}
+
+CCPoint Bullet::getCollisionPoint(){
+	return getParent()->convertToWorldSpace(this->getPosition());
+}

@@ -26,6 +26,7 @@ bool GameScene::init(){
 		CC_BREAK_IF(!_touchLayer);
 		this->addChild(_touchLayer);
 
+		scheduleUpdate();
 		return true;
 	}while(0);
 	return false;
@@ -69,4 +70,36 @@ void GameScene::cannonAimAt(CCPoint target){
 
 void GameScene::cannonShootTo(CCPoint target){
 	_cannonLayer->shootTo(target);
+}
+
+bool GameScene::checkOutCollisionBetweenFishesAndBullet(Bullet* bullet){
+	Weapon* weapon = _cannonLayer->getWeapon();
+	CCPoint bulletPosition = bullet->getCollisionPoint();
+	CCArray* fishArray = _fishLayer->getFishes();
+	CCObject* object = NULL;
+	CCARRAY_FOREACH(fishArray,object){
+		Fish* fish =(Fish*)object;
+		if(fish->isRunning() && fish->getCollisionArea().containsPoint(bulletPosition)){
+			bullet->end();
+			return true;
+		}
+	}
+	return false;
+}
+
+void GameScene::checkOutCollision(){
+	CCArray* bullets = _cannonLayer->getWeapon()->getBullets();
+	CCObject* object = NULL;
+	CCARRAY_FOREACH(bullets, object){
+		Bullet* bullet = (Bullet*)object;
+		if(bullet->isVisible()){
+			if(checkOutCollisionBetweenFishesAndBullet(bullet)){
+				
+			}
+		}
+	}
+}
+
+void GameScene::update(float delta){
+	this->checkOutCollision();
 }

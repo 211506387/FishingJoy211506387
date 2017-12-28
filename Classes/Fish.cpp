@@ -30,8 +30,7 @@ Fish* Fish::create(FishType type/* = k_Fish_Type_SmallFish*/){
 	if(fish && fish->init(type)){
 		fish->autorelease();
 		return fish;
-	}
-	else{
+	}else{
 		CC_SAFE_DELETE(fish);
 		return NULL;
 	}
@@ -43,4 +42,10 @@ int Fish::getScore(){
 
 int Fish::getSpeed(){
 	return 200;
+}
+
+CCRect Fish::getCollisionArea(){
+	CCPoint position = getParent()->convertToWorldSpace(this->getPosition());
+	CCSize size = _fishSprite->getContentSize();
+	return CCRect(position.x - size.width / 2, position.y - size.height/2, size.width, size.height);
 }

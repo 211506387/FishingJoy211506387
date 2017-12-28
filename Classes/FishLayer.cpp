@@ -42,3 +42,7 @@ void FishLayer::addFish(float dt){
 		}
 	}
 }
+
+CCArray* FishLayer::getFishes(){
+	return _fishes;
+}

@@ -14,6 +14,7 @@ public:
 	bool init();
 	CREATE_FUNC(FishLayer)
 	void addFish(float dt);
+	CCArray* getFishes();
 protected:
 	CCArray* _fishes;
 };
