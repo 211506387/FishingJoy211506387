@@ -21,6 +21,11 @@ bool GameScene::init(){
 		_cannonLayer = CannonLayer::create();
 		CC_BREAK_IF(!_cannonLayer);
 		this->addChild(_cannonLayer);
+
+		_touchLayer = TouchLayer::create();
+		CC_BREAK_IF(!_touchLayer);
+		this->addChild(_touchLayer);
+
 		return true;
 	}while(0);
 	return false;
@@ -56,4 +61,12 @@ void GameScene::preloadResources(){
 		CCString* animationName = CCString::createWithFormat("fish_animation_%02d", i + 1);
 		CCAnimationCache::sharedAnimationCache()->addAnimation(animation,animationName->getCString());
 	}
+}
+
+void GameScene::cannonAimAt(CCPoint target){
+	_cannonLayer->aimAt(target);
+}
+
+void GameScene::cannonShootTo(CCPoint target){
+	_cannonLayer->shootTo(target);
 }

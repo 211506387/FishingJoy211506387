@@ -69,3 +69,16 @@ CCSize Cannon::getSize()
 	CCSprite* cannonSprite = (CCSprite*) _cannonSprite->objectAtIndex(_type);
 	return cannonSprite->getContentSize();
 }
+
+void Cannon::aimAt(cocos2d::CCPoint target){
+	CCPoint location = getParent()->convertToWorldSpace(getPosition());
+	float angle = ccpAngleSigned(ccpSub(target, location), CCPointMake(0, 1));
+	if(abs(angle)>(3.14/2)){
+		if(angle>0){
+			angle = 3.14/2;
+		}else{
+			angle = -3.14/2;
+		}
+	}
+	this->setRotation(CC_RADIANS_TO_DEGREES(angle));
+}

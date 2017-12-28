@@ -41,3 +41,11 @@ void CannonLayer::switchCannon(cocos2d::CCObject *sender){
 	}
 	_weapon->changeCannon(operate);
 }
+
+void CannonLayer::aimAt(CCPoint target){
+	_weapon->aimAt(target);
+}
+
+void CannonLayer::shootTo (CCPoint target){
+	_weapon->shootTo(target);
+}

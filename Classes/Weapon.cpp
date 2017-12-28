@@ -62,3 +62,11 @@ void Weapon::changeCannon(CannonOperate operate)
 CCSize Weapon::getCannonSize(){
 	return _cannon->getSize();
 }
+
+void Weapon::aimAt(CCPoint target){
+	_cannon->aimAt(target);
+}
+
+void Weapon:: shootTo (CCPoint target){
+	/*_bullet->flyTo(target);*/
+}
