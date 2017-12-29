@@ -8,9 +8,9 @@ bool PanelLayer::init(){
 		this->addChild(_goldCounterLayer);
 		_goldCounterLayer->setPosition(ccp(600, 17));
 
-		ScheduleCountDown* countDown = ScheduleCountDown::create(this,10,true);
+		ScheduleCountDown* countDown = ScheduleCountDown::create(this,60,true);
 		this->addChild(countDown,0, 99);
-		_scheduleLabel=CCLabelAtlas::create(CCString::createWithFormat("%d",10)->getCString(),"baoshiyu_shuzi_02-ipadhd.png",50,54,'0');
+		_scheduleLabel=CCLabelAtlas::create(CCString::createWithFormat("%d",60)->getCString(),"baoshiyu_shuzi_02-ipadhd.png",50,54,'0');
 		addChild(_scheduleLabel);
 		_scheduleLabel->setPosition(ccp(100,1200));
 		return true;

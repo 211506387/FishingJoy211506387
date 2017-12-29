@@ -25,7 +25,7 @@ bool CannonLayer::init(){
 		this,menu_selector(CannonLayer::switchCannon));
 
 		CCMenu* menu = CCMenu::create(_subItem, _addItem, NULL);
-		menu->alignItemsHorizontallyWithPadding(120);
+		menu->alignItemsHorizontallyWithPadding(150);
 		this->addChild(menu);
 		menu->setPosition(ccp(winSize.width/2-20, _addItem->getContentSize().height/2));
 		return true;

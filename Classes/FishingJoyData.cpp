@@ -22,7 +22,7 @@ void FishingJoyData::flush(){
 }
 
 void FishingJoyData::reset(){
-	this->setGold(100);
+	this->setGold(500);
 	this->setIsBeginer(false);
 	this->setIsMusic(true);
 	this->setIsSound(true);
