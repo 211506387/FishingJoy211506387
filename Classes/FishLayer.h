@@ -2,7 +2,7 @@
 #include "cocos2d.h"
 #include "Fish.h"
 
-#define FISH_MAX_COUNT 50
+#define FISH_MAX_COUNT 30
 
 using namespace cocos2d;
 
