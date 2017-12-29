@@ -18,6 +18,7 @@ public:
 	void shootTo (CCPoint target);
 	Bullet* getBulletToShoot();
 	CCRect getCollisionArea(Bullet* bullet);
+	CannonType getCannonType();
 protected:
 	CC_SYNTHESIZE_READONLY(Cannon*, _cannon, Cannon);
 	CC_SYNTHESIZE_READONLY(CCArray*, _bullets, Bullets);

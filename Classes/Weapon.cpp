@@ -1,4 +1,5 @@
 #include "Weapon.h"
+#include "PersonalAudioEngine.h"
 
 #define BULLET_COUNTS 10
 
@@ -63,6 +64,7 @@ bool Weapon::init(CannonType type/* = k_Cannon_Type_1*/){
 }
 
 void Weapon::changeCannon(CannonOperate operate){
+	PersonalAudioEngine::getInstance()->playEffect(kEffectSwichCannon);
 	int type = (int) _cannon->getType();
 	type += operate;
 	_cannon->setType((CannonType)type);
@@ -106,4 +108,9 @@ CCRect Weapon::getCollisionArea(Bullet* bullet){
 		return _fishNets->getCollisionArea();
 	}
 	return CCRectZero;
+}
+
+CannonType Weapon::getCannonType()
+{
+	return _cannon->getType();
 }

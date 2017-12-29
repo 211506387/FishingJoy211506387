@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include "FishNet.h"
+#include "PersonalAudioEngine.h"
 
 enum{
 	k_Bullet_Action = 0
@@ -66,6 +67,7 @@ void Bullet::flyTo(CCPoint targetInWorldSpace, int type/*=0*/){
 	CCPoint targetInNodeSpace = this->getParent()->convertToNodeSpace(targetInWorldSpace);
 	this->setPosition(startInNodeSpace);
 	this->setVisible(true);
+	PersonalAudioEngine::getInstance()->playEffect(kEffectShoot);
 	float angle = ccpAngleSigned(ccpSub(targetInWorldSpace, startInWorldSpace), CCPointMake(0, 1));
 	this->setRotation(CC_RADIANS_TO_DEGREES(angle));
 	this->setTag(type);

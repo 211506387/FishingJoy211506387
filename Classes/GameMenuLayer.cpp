@@ -72,6 +72,8 @@ void GameMenuLayer::onSelectScene(CCObject *sender){
 }
 
 void GameMenuLayer::onStartGame(CCObject *sender){
+	GameScene* _gameScene=GameScene::create();
+	CCDirector::sharedDirector()->replaceScene(_gameScene);
 }
 
 CCScene* GameMenuLayer::scene(){

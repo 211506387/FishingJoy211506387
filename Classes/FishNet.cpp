@@ -1,4 +1,5 @@
 #include "FishNet.h"
+#include "PersonalAudioEngine.h"
 
 FishNet::FishNet(){
 }
@@ -21,6 +22,7 @@ bool FishNet::init(){
 void FishNet::showAt(CCPoint pos,int type /*= 0*/){
 	setPosition(pos);
 	setVisible(true);
+	PersonalAudioEngine::getInstance()->playEffect(kEffectFishNet);
 	CCString* fishNetFrameName = CCString::createWithFormat("weapon_net_%03d.png", type + 1);
 	this->_fishNetSprite->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(fishNetFrameName->getCString()));
 	stopAllActions();

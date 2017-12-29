@@ -36,7 +36,13 @@ public:
 	int getScore();
 	int getSpeed();
 	CCRect getCollisionArea();
+	void beCaught();
+	void beCaught_CallFunc();
+	CC_SYNTHESIZE(FishType, _type, Type);
+	void moveTo(CCPoint targetPoint);
+	void moveEnd();
+	void reset();
+	CCSize getSize();
 protected:
 	CCSprite* _fishSprite;
-	FishType _type;
 };
